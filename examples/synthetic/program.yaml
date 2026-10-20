@@ -1,0 +1,196 @@
+# 합성 사업 — 결함을 일부러 심은 설계서. 도구가 무엇을 잡는지 보는 회귀용이다. 실존 사업이 아니다.
+#   심은 것: A3 산출 없는 활동 · O3 결과 없는 산출 · G3 에 닿는 결과 없음 · S2 because 없음 · L1 결과 칸에 '참여기관 수'
+#            K1 투입지표 · K3 산식에 위원회 운영 건수 · K4 매출인데 기여율 없음 · K5 등차 목표치 + '전년 실적 10% 상향' 근거 · K6 baseline·근거 없음
+name: 예시_소재부품상용화지원사업
+agency: 예시부
+period:
+  start: 2027
+  end: 2031
+  type: 기한
+budget_total:
+  value: 1200
+  unit: 억원
+  source: "예시 사업설명자료 3쪽"
+program_type: 중장기산업기술개발
+program_type_basis: "[추정] 사업설명자료 2쪽 '3년 이상 상용화를 목표로' 문장"
+lifecycle: 초기
+
+strategic_goal:
+  text: "국내 소재부품 공급망의 핵심 공백 기술을 국산화하여 산업 경쟁력을 높인다"
+  source: "예시 사업설명자료 1쪽"
+performance_goals:
+  - id: G1
+    text: "핵심 공백 기술의 수요기업 검증 통과"
+    source: "예시 사업설명자료 1쪽"
+  - id: G2
+    text: "참여 중소기업의 공급망 진입"
+    source: "예시 사업설명자료 1쪽"
+  - id: G3
+    text: "소재 시험평가 공동 활용 기반 구축"
+    source: "예시 사업설명자료 1쪽"
+
+sub_programs: [기술개발, 실증지원]
+
+chain:
+  inputs:
+    - id: I1
+      text: "연 240억원(국비), 산·학·연 연구인력"
+      source: "예시 사업설명자료 3쪽"
+    - id: I2
+      text: "기존 공공 시험평가 장비"
+      source: "예시 사업설명자료 4쪽"
+  activities:
+    - id: A1
+      text: "공백 기술 과제 공모·선정·지원"
+      uses: [I1]
+      sub_program: 기술개발
+      source: "예시 사업설명자료 5쪽"
+    - id: A2
+      text: "수요기업 공정 적용 실증"
+      uses: [I1, I2]
+      sub_program: 실증지원
+      source: "예시 사업설명자료 5쪽"
+    - id: A3
+      text: "성과 교류회 개최"
+      uses: [I1]
+      sub_program: 실증지원
+      source: "예시 사업설명자료 6쪽"
+  outputs:
+    - id: O1
+      text: "제조 재현성이 확보된 시제품"
+      from: [A1]
+      source: "예시 사업설명자료 5쪽"
+    - id: O2
+      text: "수요기업 검증 통과 기술"
+      from: [A2]
+      source: "예시 사업설명자료 5쪽"
+    - id: O3
+      text: "시험평가 데이터 세트"
+      from: [A2]
+      source: "예시 사업설명자료 6쪽"
+  outcomes_short:
+    - id: S1
+      text: "참여기업의 첫 공급계약 체결"
+      from: [O2]
+      because: "검증을 통과한 기술은 수요기업 품질승인 절차로 넘어간다"
+      source: "예시 사업설명자료 7쪽"
+    - id: S2
+      text: "후속 개발 착수 기간 단축"
+      from: [O1]
+      because: ""
+      source: "예시 사업설명자료 7쪽"
+  outcomes_long:
+    - id: L1
+      text: "참여기관 수 확대와 공급망 진입 기업 증가"
+      from: [S1]
+      goal: G2
+      because: "공급계약이 쌓이면 공급망 진입 기업이 늘어난다"
+      source: "예시 사업설명자료 8쪽"
+    - id: L2
+      text: "핵심 공백 기술의 국산 공급"
+      from: [S1, S2]
+      goal: G1
+      because: ""
+      source: "예시 사업설명자료 8쪽"
+
+indicators:
+  - id: K1
+    name: 연간 예산 집행률
+    stage: 투입
+    measures: I1
+    goal: G1
+    kind: 양적
+    formula: "집행액 / 예산액 × 100"
+    unit: "%"
+    data_source: "e나라도움"
+    baseline: {year: null, value: null, source: ""}
+    targets: {2027: 95, 2028: 95, 2029: 95}
+    target_basis: "통상 수준"
+    target_source: ""
+    external_factors: ""
+    weight: 0.1
+  - id: K2
+    name: 수요기업 검증 통과율
+    stage: 산출
+    measures: O2
+    goal: G1
+    kind: 질적
+    formula: "검증 통과 과제 수 / 실증 착수 과제 수 × 100"
+    unit: "%"
+    data_source: "수요기업 확인서"
+    baseline: {year: 2025, value: 40, source: "유사사업 실적(예시 자료 9쪽)"}
+    targets: {2028: 45, 2029: 50, 2030: 60, 2031: 70}
+    target_basis: "유사사업 최고 실적 70%(예시 자료 9쪽)와 참여기업 역량을 고려"
+    target_source: "예시 사업설명자료 9쪽"
+    external_factors: ""
+    weight: 0.3
+  - id: K3
+    name: 기술 확산 지수
+    stage: 산출
+    measures: O3
+    goal: G3
+    kind: 양적
+    formula: "기술 교류회 위원회 운영 건수 + 데이터 세트 공개 건수"
+    unit: 건
+    data_source: "사업단 기록"
+    baseline: {year: null, value: null, source: ""}
+    targets: {2028: 10, 2029: 12, 2030: 14}
+    target_basis: "운영 계획"
+    target_source: "예시 운영계획 2쪽"
+    external_factors: ""
+    weight: 0.1
+  - id: K4
+    name: 참여기업 매출액
+    stage: 결과
+    measures: S1
+    goal: G2
+    kind: 질적
+    formula: "∑ 참여기업 당해연도 매출액"
+    unit: 억원
+    data_source: "참여기업 조사"
+    baseline: {year: 2025, value: 300, source: "예시 자료 9쪽"}
+    targets: {2029: 400, 2030: 500, 2031: 600}
+    target_basis: "시장 성장률 전망(예시 자료 10쪽)"
+    target_source: "예시 사업설명자료 10쪽"
+    external_factors: ""
+    weight: 0.3
+  - id: K5
+    name: 공급망 진입 기업 수
+    stage: 결과
+    measures: L1
+    goal: G2
+    kind: 양적
+    formula: "당해연도 신규 공급계약 체결 기업 수"
+    unit: 개
+    data_source: "공급계약서"
+    baseline: {year: 2025, value: 4, source: "예시 자료 9쪽"}
+    targets: {2028: 5, 2029: 6, 2030: 7, 2031: 8}
+    target_basis: "전년 실적 대비 10% 상향"
+    target_source: ""
+    external_factors: ""
+    weight: 0.2
+  - id: K6
+    name: 후속개발 착수 소요기간
+    stage: 결과
+    measures: S2
+    goal: G1
+    kind: 질적
+    formula: "완료 과제의 후속개발 착수까지 평균 개월 수"
+    unit: 개월
+    data_source: "후보풀 관리 대장"
+    baseline: {year: null, value: null, source: ""}
+    targets: {2029: null, 2030: null, 2031: null}
+    target_basis: ""
+    target_source: ""
+    external_factors: ""
+    weight: null
+
+context:
+  external_conditions: "수요 대기업의 공급망 재편 일정과 해외 경쟁 소재의 가격"
+  concurrent_programs: "소재부품기술개발사업(예시부)"
+
+sources:
+  - id: D1
+    title: "예시 사업설명자료"
+    date: "2026-09"
+notes: "합성 예시. 모든 수치·문장은 지어낸 것이며 실존 사업과 무관하다."
