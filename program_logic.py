@@ -27,7 +27,7 @@ import sys
 from dataclasses import dataclass, field
 from pathlib import Path
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 # ---------------------------------------------------------------------------
 # 0. YAML (policy-did 와 같은 부분집합 파서)
@@ -585,6 +585,12 @@ def load_design(path: Path) -> Design:
             _s(it.get("data_source")), bl or {}, {str(y): v for y, v in tg.items()},
             _s(it.get("target_basis")), _s(it.get("target_source")), _s(it.get("external_factors")),
             bool(it.get("target_lowered_for_low_performance")), it.get("weight"), _s(it.get("sub_program")) or None))
+    for label, ids in (("성과목표", [g["id"] for g in goals]), ("지표", [i.id for i in inds])):
+        seen_ids = set()
+        for ident in ids:
+            if ident in seen_ids:
+                errors.append(f"{label} id 중복: {ident}")
+            seen_ids.add(ident)
     sg = raw.get("strategic_goal")
     if not isinstance(sg, dict):
         sg = {"text": _s(sg), "source": ""}

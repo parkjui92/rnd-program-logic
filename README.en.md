@@ -12,6 +12,20 @@ Drawing the five boxes by hand does reveal the gaps, but a person has to spot th
 
 > **Terms** — A *logic model* draws a program as inputs (money, people) → activities (what is done) → outputs (direct products of the activity) → outcomes (the change those outputs cause). "n prototypes" is an output; "supply contracts won by firms that used them" is an outcome. Performance indicators should measure outputs or outcomes; budget execution rates or meeting counts measure inputs and process and are not performance indicators.
 
+## Start with a complete example
+
+Use Python 3.10 or newer; no API key, network connection, or LLM is needed after downloading.
+
+```bash
+git clone https://github.com/parkjui92/rnd-program-logic.git
+cd rnd-program-logic
+python3 program_logic.py report examples/synthetic/program.yaml --out out/first-look
+```
+
+Open `out/first-look/report.md`, `logic_model.html`, and `check.json`. The synthetic example deliberately includes defects, so FAIL and exit code 3 are expected. The `open` command below is macOS-specific; other systems can open the files in a file manager.
+
+Use this before a program-design meeting, when revising indicators, or when applying the same checklist to several programs. Its strength is traceable, repeatable rule checks with guideline references. A person must transcribe the source documents into YAML and assess meaning; the tool does not ingest PDF/HWP or certify program quality. Goal, node, and indicator IDs must be unique within their respective lists. Use different output folders to preserve revisions.
+
 ## How
 
 ```bash
@@ -113,4 +127,4 @@ The indicator table lists, per indicator: goal, measured node, stage, qualitativ
 
 ## Status and limits
 
-20 tests pass (`python3 program_logic.py selftest`); both examples run end to end. Character-level rules only; the impact box is not drawn; the built-in YAML parser reads a subset (PyYAML is used when present). MIT.
+The initial release passed 20 tests (`python3 program_logic.py selftest`); both examples run end to end. Character-level rules only; the impact box is not drawn; the built-in YAML parser reads a subset (PyYAML is used when present). MIT.
